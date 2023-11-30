@@ -1,0 +1,68 @@
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: flex;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+    flex-direction: column;
+  }
+}
+header{
+  font-size: 30px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid;
+}
+.input-label{
+  min-width: 200px;
+  display: inline-block;
+}
+.radio-group{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: flex-end;
+  align-items: flex-end;
+}
+button{
+  min-width: 55px;
+  height: 30px;
+  background-color: #96ff09;
+}
+button:not(:disabled){
+  cursor: pointer;
+}
+
+table{
+  min-width: 550px;
+}
+
+table tbody tr:nth-child(2n+1) {
+  background-color: #ecd6d6;
+}
