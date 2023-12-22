@@ -27,3 +27,14 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### For pwa support;
+```sh
+npm run build
+```
+```sh
+cd dist
+```
+```sh
+serve
+```
