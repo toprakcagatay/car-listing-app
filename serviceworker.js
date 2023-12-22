@@ -1,7 +1,6 @@
 const cacheName = "MyCache_1";
 const precachedResources = [
   "/",
-  "/#/",
   "/index.html",
   "/assets/index-1f65c30e.js",
   "/assets/index-6042d029.css",
