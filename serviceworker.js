@@ -7,7 +7,7 @@ const precachedResources = [
   "/assets/index-6042d029.css",
   "/icon-192x192.png", "/icon-512x512.png",
   "/favicon.ico",
-  "/data/tableData.json"
+  "/data/tableData.json",
   "/manifest.webmanifest"
 ];
 
