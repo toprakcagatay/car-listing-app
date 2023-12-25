@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "vite build && cp serviceworker.js dist/serviceworker.js && cp manifest.webmanifest dist/manifest.webmanifest && mkdir dist/data && cp data/tableData.json dist/data/tableData.json",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vite-plugin-static-copy": "^1.0.0"
   }
 }
