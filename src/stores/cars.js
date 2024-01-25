@@ -20,12 +20,18 @@ export const useCarsStore = defineStore('cars', {
     }
   },
   actions: {
-    updateCar: function (updatedCar){
-      var car = this.getCarById(updatedCar.id);
-      car.inStock = updatedCar.inStock;
-      car.hp = updatedCar.hp;
-      car.price = updatedCar.price;
-      car.color = updatedCar.color;
+    updateCar: async function (updateCar){
+      var car = this.getCarById(updateCar.id);
+      car.inStock = updateCar.inStock;
+      car.hp = updateCar.hp;
+      car.price = updateCar.price;
+      car.color = updateCar.color;
+      //var crr = await carDB.getCar(updateCar.id);
+
+      //console.log(crr);
+
+      await carDB.updateCar(car);
+
     },
     fetchCarList: async function(){
       await carDB.open();

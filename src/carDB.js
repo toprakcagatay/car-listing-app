@@ -11,7 +11,7 @@ export const carDB = {
       request.onupgradeneeded = function(event) {
         carDB.db = event.target.result;
         let objectStore = carDB.db.createObjectStore("CarStorage", { keyPath: "id" });
-        objectStore.createIndex("carIdIndex", "carId", { unique: false });
+        objectStore.createIndex("carIdIndex", "id", { unique: false });
       };
 
       request.onsuccess = function(event) {
@@ -31,6 +31,9 @@ export const carDB = {
   },
   addCar: (carData)=>{
     let transaction = carDB.db.transaction("CarStorage", "readwrite");
+    transaction.oncomplete = function(){
+      //carDB.db.close();
+    }
     let objectStore = transaction.objectStore("CarStorage");
 
 
@@ -49,7 +52,10 @@ export const carDB = {
   },
   count: async () =>{
     return new Promise((resolve, reject)=>{
-      const transaction = carDB.db.transaction("CarStorage", "readonly");
+      const transaction = carDB.db.transaction("CarStorage", "readwrite");
+      transaction.oncomplete = function(){
+        //carDB.db.close();
+      }
       const objectStore = transaction.objectStore("CarStorage");
 
       const countRequest = objectStore.count();
@@ -66,19 +72,27 @@ export const carDB = {
     });
 
   },
-  getCar: ()=>{
-    let transaction = db.transaction("CarStorage", "readonly");
-    let objectStore = transaction.objectStore("CarStorage");
+  getCar: async (id)=>{
+    return new Promise((resolve, reject) => {
+      let transaction = carDB.db.transaction("CarStorage", "readwrite");
+      transaction.oncomplete = function(){
+        //carDB.db.close();
+      }
+      let objectStore = transaction.objectStore("CarStorage");
 
-    let getRequest = objectStore.get(1);
+      let getRequest = objectStore.get(id);
 
-    getRequest.onsuccess = function(event) {
-      let result = event.target.result;
-      // Access the retrieved data
-    };
+      getRequest.onsuccess = function() {
+        let result = getRequest.result;
+        // Access the retrieved data
+        //console.log("result",getRequest);
+        resolve(result);
+      };
+    })
+
   },
   filterByIndex: (carId)=>{
-    let transaction = db.transaction("CarStorage", "readonly");
+    let transaction = db.transaction("CarStorage", "readwrite");
     let objectStore = transaction.objectStore("CarStorage");
     let index = objectStore.index("carIdIndex");
 
@@ -91,10 +105,11 @@ export const carDB = {
   },
   getCarList: async ()=>{
     return new Promise((resolve, reject)=>{
-      let transaction = carDB.db.transaction("CarStorage", "readonly");
+      let transaction = carDB.db.transaction("CarStorage", "readwrite");
       let objectStore = transaction.objectStore("CarStorage");
       transaction.oncomplete = () => {
         resolve(carList);
+        //carDB.db.close();
       };
       let cursorRequest = objectStore.openCursor();
       var carList = [];
@@ -122,14 +137,34 @@ export const carDB = {
       // Record deleted successfully
     };
   },
-  updateCar: (carData)=>{
-    let transaction = db.transaction("CarStorage", "readwrite");
-    let objectStore = transaction.objectStore("CarStorage");
+  updateCar: async (carData)=>{
+    return new Promise((resolve, reject)=>{
+      let transaction = carDB.db.transaction("CarStorage", "readwrite");
+      transaction.oncomplete = function(){
+        //carDB.db.close();
+      }
+      let objectStore = transaction.objectStore("CarStorage");
 
-    let updateRequest = objectStore.put(carData);
+      let getRequest = objectStore.get(carData.id);
+      console.log(getRequest);
+      getRequest.onsuccess = () => {
+        var car = {
+          id: carData.id,
+          carId: carData.carId,
+          inStock: carData.inStock,
+          hp: carData.hp,
+          price: carData.price,
+          color: carData.color
+        }
+        let updateRequest = objectStore.put(car);
 
-    updateRequest.onsuccess = function(event) {
-      // Record updated successfully
-    };
+        updateRequest.onsuccess = function(event) {
+          // Record updated successfully
+          resolve();
+        };
+      }
+
+    });
+
   }
 };
