@@ -2,7 +2,7 @@
   "name" : "My Car Listing App",
   "short_name" : "CarList",
   "description" : "Listing the cars",
-  "start_url" : "http://localhost:3000/#/",
+  "start_url" : "http://localhost:5173/#/",
   "lang" : "English",
   "display" : "fullscreen",
   "theme_color": "#3d3d3d",
