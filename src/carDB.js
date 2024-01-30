@@ -127,15 +127,16 @@ export const carDB = {
     });
 
   },
-  removeCar: ()=>{
-    let transaction = db.transaction("CarStorage", "readwrite");
+  removeCar: (carId)=>{
+    console.log("remove car", carId);
+    let transaction = carDB.db.transaction("CarStorage", "readwrite");
     let objectStore = transaction.objectStore("CarStorage");
 
-    let deleteRequest = objectStore.delete(1);
+    let deleteRequest = objectStore.delete(carId);
 
-    deleteRequest.onsuccess = function(event) {
+    /*deleteRequest.onsuccess = function(event) {
       // Record deleted successfully
-    };
+    };*/
   },
   updateCar: async (carData)=>{
     return new Promise((resolve, reject)=>{

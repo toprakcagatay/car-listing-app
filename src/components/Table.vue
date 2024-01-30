@@ -1,13 +1,16 @@
 <script setup>
 import { useCarsStore } from '@/stores/cars'
 const carsStore = useCarsStore();
-const emit = defineEmits(['edit'])
+const emit = defineEmits(['edit','remove'])
 
 
 const formatter = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
 
 function edit(id){
   emit("edit", id);
+}
+function remove(id){
+  emit("remove", id);
 }
 
 </script>
@@ -34,6 +37,7 @@ function edit(id){
         <td>{{formatter.format(car.price)}}</td>
         <td>{{car.color}}</td>
         <td><button @click="edit(car.id)">Edit</button></td>
+        <td><button @click="remove(car.id)">Remove</button></td>
       </tr>
     </tbody>
   </table>

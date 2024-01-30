@@ -33,6 +33,13 @@ export const useCarsStore = defineStore('cars', {
       await carDB.updateCar(car);
 
     },
+    removeCar: async function(carId){
+      await carDB.removeCar(carId);
+
+      this.carList = this.carList.filter(function(item) {
+          return item.id !== carId
+      })
+    },
     fetchCarList: async function(){
       await carDB.open();
       if (await carDB.count()==0) {
