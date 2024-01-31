@@ -10,10 +10,14 @@ function removeCar(carId){
   carsStore.removeCar(carId);
   //carsStore.fetchCarList();
 }
+function newCar(){
+  window.location.href = "/#/new/";
+}
 </script>
 
 <template>
   <Table @edit="editCar" @remove="removeCar"/>
+  <button @click="newCar">New Car</button>
 </template>
 
 <style scoped>

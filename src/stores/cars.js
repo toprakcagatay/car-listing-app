@@ -40,6 +40,10 @@ export const useCarsStore = defineStore('cars', {
           return item.id !== carId
       })
     },
+    addCar: async function(car){
+      await carDB.addCar(car);
+      this.carList.push(car);
+    },
     fetchCarList: async function(){
       await carDB.open();
       if (await carDB.count()==0) {
@@ -70,9 +74,7 @@ export const useCarsStore = defineStore('cars', {
       } else {
         //this.carList =
         carDB.getCarList().then((carList)=>{
-          console.log("car list ", carList.length);
           this.carList = carList;
-          console.log("car list pinia ", this.carList.length);
         });
       }
 

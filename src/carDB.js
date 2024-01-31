@@ -36,8 +36,15 @@ export const carDB = {
     }
     let objectStore = transaction.objectStore("CarStorage");
 
-
-    let addRequest = objectStore.add(carData);
+    var newCar = {
+      id: carData.id,
+      carId: carData.carId,
+      inStock: carData.inStock,
+      hp: carData.hp,
+      price: carData.price,
+      color: carData.color
+    };
+    let addRequest = objectStore.add(newCar);
 
     addRequest.onsuccess = function(event) {
       // Data added successfully

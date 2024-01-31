@@ -1,16 +1,16 @@
 <script setup>
-  import { useCarsStore } from '@/stores/cars'
+  import { useCarsStore } from '@/stores/cars';
+  import {computed, ref} from "vue";
+  import CurrencyInput from './CurrencyInput.vue';
   const carsStore = useCarsStore();
+  const emit = defineEmits(['change']);
+
   const props = defineProps({carDetails: Object});
 
   const car = props.carDetails;
-  const emit = defineEmits(['cancel','save']);
 
-  function cancel(){
-    emit("cancel");
-  }
-  function save(){
-    emit("save");
+  function onChange(){
+    emit("change");
   }
 
 </script>
@@ -32,6 +32,5 @@
 
     </div>
   </div>
-  <button @click="cancel">Cancel</button>
-  <button @click="save" :disabled="!isUpdated">Save</button>
+
 </template>

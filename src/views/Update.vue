@@ -1,5 +1,4 @@
 <script setup>
-import CurrencyInput from '../components/CurrencyInput.vue'
 import CarDetails from '../components/CarDetails.vue'
 import { useCarsStore } from '@/stores/cars'
 import { useRoute } from 'vue-router'
@@ -30,10 +29,10 @@ function onChange(){
   car.value.price != storedCar.price ||
   car.value.color != storedCar.color;
 }
-function cancel(){
+function onCancel(){
   window.location.href = "/#/";
 }
-function save(){
+function onSave(){
   carsStore.updateCar({
     id: car.value.id,
     carId: car.value.carId,
@@ -47,7 +46,9 @@ function save(){
 </script>
 
 <template>
-  <CarDetails v-bind:carDetails="car" @cancel="cancel" @save="save"></CarDetails>
+  <CarDetails v-bind:carDetails="car" @change="onChange"></CarDetails>
+  <button @click="onCancel">Cancel</button>
+  <button @click="onSave" :disabled="!isUpdated">Save</button>
 </template>
 
 <style scoped>
