@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "carId": "Car1",
+    "inStock": "true",
+    "hp": "250",
+    "price": "50000",
+    "color": "red"
+  },
+  {
+    "id": "2",
+    "carId": "Car2",
+    "inStock": "true",
+    "hp": "250",
+    "price": "50000",
+    "color": "red"
+  },
+  {
+    "id": "3",
+    "carId": "Car3",
+    "inStock": "true",
+    "hp": "250",
+    "price": "50000",
+    "color": "red"
+  },
+  {
+    "id": "4",
+    "carId": "Car4",
+    "inStock": "true",
+    "hp": "250",
+    "price": "50000.50",
+    "color": "red"
+  },
+  {
+    "id": "5",
+    "carId": "Car5",
+    "inStock": "true",
+    "hp": "250",
+    "price": "50000",
+    "color": "red"
+  },
+  {
+    "id": "6",
+    "carId": "Car6",
+    "inStock": "true",
+    "hp": "250",
+    "price": "50000",
+    "color": "red"
+  },
+  {
+    "id": "7",
+    "carId": "Car7",
+    "inStock": "true",
+    "hp": "250",
+    "price": "50000",
+    "color": "red"
+  }
+]
