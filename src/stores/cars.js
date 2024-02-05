@@ -6,14 +6,21 @@ import {carDB} from "../carDB.js";
 export const useCarsStore = defineStore('cars', {
   state: ()=>({
     colorList: ["red", "blue", "green"],
-    carList: []
+    carList: [],
+    priceList: []
   }),
   getters: {
     getCarList: (state)=>{
       return state.carList;
     },
+    getPriceList: (state)=>{
+      return state.priceList;
+    },
     getCarById: (state)=>{
       return (id) => state.getCarList.find((car)=> car.id==id);
+    },
+    getPriceById: (state)=>{
+      return (id) => state.getPriceList.find((price)=> price.id==id);
     },
     getColorList: (state)=>{
       return state.colorList;
@@ -44,12 +51,60 @@ export const useCarsStore = defineStore('cars', {
       await carDB.addCar(car);
       this.carList.push(car);
     },
-    fetchCarList: async function(){
+    fetchData: async function(){
+      try{
+        var updatedResult = await axios.get(
+          "/data/updated.json"
+        );
+        //console.log(updatedResult);
+        var updatedLocal = JSON.parse(localStorage.getItem("updated"));
+        if (updatedLocal==null) {
+            localStorage.setItem("updated", JSON.stringify(updatedResult.data))
+        }
+
+        for(var index in updatedResult.data) {
+          let lastUpdated = Date.parse(updatedResult.data[index].lastUpdated)
+
+          if (lastUpdated > updatedLocal.find((item)=>{
+            return updatedResult.data[index].name == item.name;
+          }).lastUpdated)
+            localStorage.setItem("updated", JSON.stringify(updatedResult.data))
+        };
+      } catch(error){
+        console.error(error);
+      }
+
+    },
+    fetchPriceList: async function(){
+      if (force || await carDB.carListCount()==0) {
+        try{
+          var result = await axios.get(
+            "/data/car-list.json"
+          );
+          if (!Array.isArray(result.data)) throw "corrupted data";
+          var filteredData = result.data.filter((item)=>{
+            return item.id && /^-?\d+$/.test(item.id) // is integer
+            && item.price && /^-?\d+(\.\d+)?$/.test(item.price) // is decimal
+          });
+          if (filteredData.length == 0) throw "No priceStore data";
+
+          this.priceList = filteredData;
+        } catch(error){
+          alert(error);
+          console.log(error);
+        }
+      } else {
+        carDB.getPriceList().then((priceList)=>{
+          this.priceList = priceList;
+        });
+      }
+    },
+    fetchCarList: async function(force){
       await carDB.open();
-      if (await carDB.count()==0) {
+      if (force || await carDB.carListCount()==0) {
         try {
           var result = await axios.get(
-            "/data/tableData.json"
+            "/data/car-list.json"
           );
           if (!Array.isArray(result.data)) throw "corrupted data";
 
@@ -58,10 +113,10 @@ export const useCarsStore = defineStore('cars', {
             && item.carId && item.carId.length>3
             && item.inStock && (item.inStock == "true" || item.inStock == "false")
             && item.hp && /^-?\d+$/.test(item.hp) && parseInt(item.hp)>=100 && parseInt(item.hp)<=550
-            && item.price && /^-?\d+(\.\d+)?$/.test(item.price) // is decimal
+            //&& item.price && /^-?\d+(\.\d+)?$/.test(item.price) // is decimal
             && item.color && this.colorList.includes(item.color);
           });
-          if (filteredData.length == 0) throw "No data";
+          if (filteredData.length == 0) throw "No car data";
 
           filteredData.forEach((item, i) => {
             carDB.addCar(item);

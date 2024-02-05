@@ -1,6 +1,7 @@
 <script setup>
   import { useCarsStore } from '@/stores/cars'
   const carsStore = useCarsStore();
+  carsStore.fetchData();
   carsStore.fetchCarList();
 
 </script>

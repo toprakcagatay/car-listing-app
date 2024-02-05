@@ -10,8 +10,10 @@ export const carDB = {
 
       request.onupgradeneeded = function(event) {
         carDB.db = event.target.result;
-        let objectStore = carDB.db.createObjectStore("CarStorage", { keyPath: "id" });
-        objectStore.createIndex("carIdIndex", "id", { unique: false });
+        let carStore = carDB.db.createObjectStore("CarStorage", { keyPath: "id" });
+        //carStore.createIndex("carIdIndex", "carId", { unique: false });
+        let priceStore = carDB.db.createObjectStore("PriceStorage", { keyPath: "name" });
+        //priceStore.createIndex("priceIdIndex", "id", { unique: false });
       };
 
       request.onsuccess = function(event) {
@@ -29,6 +31,7 @@ export const carDB = {
     })
 
   },
+
   addCar: (carData)=>{
     let transaction = carDB.db.transaction("CarStorage", "readwrite");
     transaction.oncomplete = function(){
@@ -57,7 +60,7 @@ export const carDB = {
       // Access the retrieved data
     };*/
   },
-  count: async () =>{
+  carListCount: async () =>{
     return new Promise((resolve, reject)=>{
       const transaction = carDB.db.transaction("CarStorage", "readwrite");
       transaction.oncomplete = function(){
@@ -114,10 +117,6 @@ export const carDB = {
     return new Promise((resolve, reject)=>{
       let transaction = carDB.db.transaction("CarStorage", "readwrite");
       let objectStore = transaction.objectStore("CarStorage");
-      transaction.oncomplete = () => {
-        resolve(carList);
-        //carDB.db.close();
-      };
       let cursorRequest = objectStore.openCursor();
       var carList = [];
       cursorRequest.onsuccess = function(event) {
@@ -130,6 +129,34 @@ export const carDB = {
           cursor.continue();
         }
 
+      };
+      transaction.oncomplete = () => {
+        resolve(carList);
+        //carDB.db.close();
+      };
+    });
+
+  },
+  getPriceList: async ()=>{
+    return new Promise((resolve, reject)=>{
+      let transaction = carDB.db.transaction("PriceStorage", "readwrite");
+      let objectStore = transaction.objectStore("PriceStorage");
+      let cursorRequest = objectStore.openCursor();
+      var priceList = [];
+      cursorRequest.onsuccess = function(event) {
+        let cursor = event.target.result;
+        if (cursor) {
+          // Access the current record
+          //console.log(cursor.value);
+          priceList.push(cursor.value);
+          // Move to the next record
+          cursor.continue();
+        }
+
+      };
+      transaction.oncomplete = () => {
+        resolve(priceList);
+        //carDB.db.close();
       };
     });
 
