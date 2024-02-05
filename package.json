@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite --host --force",
     "build": "vite build && cp serviceworker.js dist/serviceworker.js && cp manifest.webmanifest dist/manifest.webmanifest && mkdir dist/data && cp data/tableData.json dist/data/tableData.json",
     "preview": "vite preview"
   },

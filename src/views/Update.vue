@@ -33,7 +33,7 @@ function onChange(){
   car.value.color != storedCar.color;
 }
 function cancel(){
-  window.location.href = "/#/";
+  window.location.href = "/";
 }
 function save(){
   carsStore.updateCar({
@@ -44,7 +44,7 @@ function save(){
     price: car.value.price,
     color: car.value.color
   });
-  window.location.href = "/#/";
+  window.location.href = "/";
 }
 </script>
 

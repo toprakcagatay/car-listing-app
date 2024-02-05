@@ -1,7 +1,7 @@
 <script setup>
 import Table from '../components/Table.vue'
 function editCar(id){
-  window.location.href = "/#/update/"+id;
+  window.location.href = "/update/"+id;
 }
 </script>
 
