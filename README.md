@@ -1,3 +1,5 @@
+https://car-listing-app-gules.vercel.app/#/ online!
+
 # car-listing-app
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -26,15 +28,4 @@ npm run dev
 
 ```sh
 npm run build
-```
-
-### For pwa support;
-```sh
-npm run build
-```
-```sh
-cd dist
-```
-```sh
-serve
 ```
