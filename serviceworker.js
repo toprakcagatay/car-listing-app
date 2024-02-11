@@ -16,6 +16,7 @@ async function precache() {
 }
 
 self.addEventListener("install", (event) => {
+  console.log("installed");
   event.waitUntil(precache());
 });
 
@@ -28,7 +29,7 @@ async function cacheFirst(request) {
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
-      const cache = await caches.open("MyCache_1");
+      const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;

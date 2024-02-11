@@ -2,7 +2,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import {createRouter, createWebHashHistory, createWebHistory, createMemoryHistory} from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 import Home from './views/Home.vue'
 import Update from './views/Update.vue'
 import App from './App.vue'

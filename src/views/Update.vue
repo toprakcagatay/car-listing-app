@@ -33,7 +33,7 @@ function onChange(){
   car.value.color != storedCar.color;
 }
 function cancel(){
-  window.location.href = "/";
+  window.location.href = "/#";
 }
 function save(){
   carsStore.updateCar({
